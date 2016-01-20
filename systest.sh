@@ -9,10 +9,10 @@ else
   export POOL_DEFAULT="$POOL_DEFAULT"
 fi
 
-if [ -z "$FUEL_DEVOPS" ] ; then
-  export FUEL_DEVOPS='FUEL_DEVOPS'
+if [ -z "$FUEL_DEVOPS_VENV" ] ; then
+  export FUEL_DEVOPS_VENV='/opt/fuel-devops-venv'
 else
-  export FUEL_DEVOPS="$FUEL_DEVOPS"
+  export FUEL_DEVOPS_VENV="$FUEL_DEVOPS_VENV"
 fi
 
 if [ -z "$FUEL_QA" ] ; then
@@ -21,5 +21,5 @@ else
   export FUEL_QA="$FUEL_QA"
 fi
 
-sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $(pwd) -j "$ME-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS -o --group=$MY_GROUP $@
+sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $(pwd) -j "$ME-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP $@
 
