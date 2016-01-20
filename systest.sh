@@ -27,7 +27,7 @@ else
 fi
 
 if [ -z "$LOGS_DIR" ] ; then
-  export LOGS_DIR="~/systest-logs"
+  export LOGS_DIR="/home/$(whoami)/systest-logs"
 else
   export LOGS_DIR="$LOGS_DIR"
 fi
