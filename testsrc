@@ -1,0 +1,63 @@
+# Network interface driver
+# May be one of virtio, e1000, pcnet, rtl8139
+export INTERFACE_MODEL='e1000'
+
+# Create snapshot after successful test
+export MAKE_SNAPSHOT='true'
+
+# ISO
+# master
+export ISO_PATH=/home/$(whoami)/fuel-iso/fuel-8.0-428-2016-01-12_07-51-13.iso
+
+# Manifests
+#export SYNC_DEPL_TASKS=true
+#export UPLOAD_MANIFESTS=true
+#export UPLOAD_MANIFESTS_PATH=/home/$(whoami)/fuel-library/deployment/puppet/
+
+# Release
+export OPENSTACK_RELEASE="Ubuntu"
+#export OPENSTACK_RELEASE="CentOS"
+
+# Devops template
+#export DEVOPS_SETTINGS_TEMPLATE=/home/$(whoami)/devops/multirack.yaml
+
+# HW
+export NODES_COUNT=7
+export ADMIN_NODE_MEMORY=4096
+export SLAVE_NODE_MEMORY=4096
+export SLAVE_NODE_CPU=2
+
+# MULTI-RACK
+#export MULTIPLE_NETWORKS='true'
+
+# DOCKER
+# export BUILD_IMAGES=true
+
+# TEST GROUP
+export MY_GROUP="setup"
+#export MY_GROUP="deploy_simple_flat"
+#export MY_GROUP="deploy_ha_flat"
+#export MY_GROUP="deploy_ha"
+#export MY_GROUP="deploy_ha_vlan"
+#export MY_GROUP="deploy_neutron_vlan_ha"
+#export MY_GROUP="deploy_neutron_gre_ha"
+#export MY_GROUP="ha_delete_vips"
+#export MY_GROUP="ceph_ha"
+#export MY_GROUP="ceph_multinode_with_cinder"
+#export MY_GROUP="deploy_simple_cinder"
+#export MY_GROUP="ceph_rados_gw"
+#export MY_GROUP="deploy_pr_ha"
+#export MY_GROUP="test_pullrequest"
+#export MY_GROUP="deploy_ceilometer_simple_with_mongo"
+#export MY_GROUP="deploy_ceilometer_ha_with_mongo"
+#export MY_GROUP="deploy_neutron_vlan"
+#export MY_GROUP="deploy_simple_zabbix"
+#export MY_GROUP="bvt_1"
+#export MY_GROUP="bvt_2"
+#export MY_GROUP="deploy_bonding_ha_balance_slb"
+#export MY_GROUP="deploy_ha_neutron"
+#export MY_GROUP="ha_flat_scalability"
+#export MY_GROUP="deploy_ha_one_controller_flat"
+#export MY_GROUP="deploy_ceilometer_ha_one_controller_multirole"
+#export MY_GROUP="deploy_controllers_from_custom_nodegroup"
+#export MY_GROUP="system_test.newnewtest.multirack"
