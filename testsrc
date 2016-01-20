@@ -6,8 +6,7 @@ export INTERFACE_MODEL='e1000'
 export MAKE_SNAPSHOT='true'
 
 # ISO
-# master
-export ISO_PATH=/home/$(whoami)/fuel-iso/fuel-8.0-428-2016-01-12_07-51-13.iso
+export ISO_PATH=/opt/fuel-iso/fuel-8.0-457-2016-01-19_07-50-32.iso
 
 # Manifests
 #export SYNC_DEPL_TASKS=true
