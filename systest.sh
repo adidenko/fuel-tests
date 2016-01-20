@@ -35,5 +35,5 @@ fi
 echo
 echo "ATTENTION! Logs will be saved in $LOGS_DIR"
 echo
-sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $FUEL_QA -j "$ME-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP $@
+sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $FUEL_QA -j "$ME-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP -o --xunit-file=$LOGS_DIR/nosetests.xml $@
 
