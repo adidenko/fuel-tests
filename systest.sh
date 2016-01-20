@@ -26,5 +26,14 @@ else
   export FUEL_QA="$FUEL_QA"
 fi
 
+if [ -z "$LOGS_DIR" ] ; then
+  export LOGS_DIR="~/systest-logs"
+else
+  export LOGS_DIR="$LOGS_DIR"
+fi
+
+echo
+echo "ATTENTION! Logs will be saved in $LOGS_DIR"
+echo
 sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $(pwd) -j "$ME-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP $@
 
