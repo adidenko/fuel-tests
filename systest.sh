@@ -1,5 +1,10 @@
 #!/bin/bash
-. testsrc
+
+pushd `dirname $0` > /dev/null
+SCRIPTPATH=`pwd`
+popd > /dev/null
+
+source $SCRIPTPATH/testsrc
 
 ME=`whoami`
 
