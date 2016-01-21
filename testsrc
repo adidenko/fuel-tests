@@ -59,4 +59,4 @@ export MY_GROUP="setup"
 #export MY_GROUP="deploy_ha_one_controller_flat"
 #export MY_GROUP="deploy_ceilometer_ha_one_controller_multirole"
 #export MY_GROUP="deploy_controllers_from_custom_nodegroup"
-#export MY_GROUP="multiple_cluster_networks"
+#export MY_GROUP="multiple_cluster_networks" # aka tread_7, all tests related to multi racks
