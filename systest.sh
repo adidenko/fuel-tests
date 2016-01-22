@@ -27,9 +27,21 @@ else
 fi
 
 if [ -z "$LOGS_DIR" ] ; then
-  export LOGS_DIR="/home/$(whoami)/systest-logs"
+  export LOGS_DIR="$HOME/systest-logs"
 else
   export LOGS_DIR="$LOGS_DIR"
+fi
+
+if [ -z "$SSL_CERTS_DIR" ] ; then
+  export SSL_CERTS_DIR="$HOME/systest-logs"
+else
+  export SSL_CERTS_DIR="$SSL_CERTS_DIR"
+fi
+
+if [ -z "$XUNIT_FILE" ] ; then
+  export XUNIT_FILE="$LOGS_DIR/nosetests.xml"
+else
+  export XUNIT_FILE="$XUNIT_FILE"
 fi
 
 echo

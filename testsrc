@@ -5,6 +5,12 @@ export INTERFACE_MODEL='e1000'
 # Create snapshot after successful test
 export MAKE_SNAPSHOT='true'
 
+# SSL DIR
+export SSL_CERTS_DIR=$HOME/systest-logs
+
+# LOGS
+export LOGS_DIR=$HOME/systest-logs
+
 # ISO
 export ISO_PATH=/opt/fuel-iso/fuel-8.0-465-2016-01-21_07-52-32.iso
 
