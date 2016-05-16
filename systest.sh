@@ -6,7 +6,9 @@ popd > /dev/null
 
 source $SCRIPTPATH/testsrc
 
+USR="$1"
 ME=`whoami`
+USR="${USR:-$ME}"
 
 if [ -z "$POOL_DEFAULT" ] ; then
   export POOL_DEFAULT='10.100.0.0/16:24'
@@ -47,5 +49,9 @@ fi
 echo
 echo "ATTENTION! Logs will be saved in $LOGS_DIR"
 echo
-sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $FUEL_QA -j "$ME-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP -o --xunit-file=$LOGS_DIR/nosetests.xml $@
+
+# --xunit-file no longer works
+#sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $FUEL_QA -j "$USR-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP -o --xunit-file=$LOGS_DIR/nosetests.xml $@
+
+sh "$FUEL_QA/utils/jenkins/system_tests.sh" -t test -w $FUEL_QA -j "$USR-venv" -i "$ISO_PATH" -V $FUEL_DEVOPS_VENV -o --group=$MY_GROUP $@
 
