@@ -2,7 +2,7 @@
 ###    Variables for ALL     ###
 ### Please edit this section ###
 ################################
-VariablesForAll() {
+variables_for_all() {
   ## LOGS DIR ##
   export LOGS_DIR="${HOME}/systest-logs"
 
@@ -195,28 +195,49 @@ fuel_ccp_k8s_vars() {
 }
 
 
-GetSnapshotParams() {
+get_snapshot_params() {
   export SNAPSHOT_ARTIFACTS_FILE="${SCRIPTPATH}/snapshots.params"
   export SNAPSHOT_OUTPUT_FILE="${SCRIPTPATH}/9.x_vars.sh"
   curl -v -S https://product-ci.infra.mirantis.net/job/9.x.snapshot/lastSuccessfulBuild/artifact/snapshots.params > "${SNAPSHOT_ARTIFACTS_FILE}"
   if [ ! -f "${SNAPSHOT_ARTIFACTS_FILE}" ]; then
-    echo -e "                                                             "
-    echo -e " \e[31m Error! SNAPSHOT_ARTIFACTS_FILE not downloaded! \e[0m "
-    echo -e "                                                             "
-    exit 1
+    if [ -t 1 ]; then
+      echo -e "                                                             "
+      echo -e " \e[31m Error! SNAPSHOT_ARTIFACTS_FILE not downloaded! \e[0m "
+      echo -e "                                                             "
+      exit 1
+    else
+        echo "                                                "
+        echo " Error! SNAPSHOT_ARTIFACTS_FILE not downloaded! "
+        echo "                                                "
+        exit 1
+    fi
   else
       if [ ! -f "${FUEL_QA}/utils/jenkins/conv_snapshot_file.py" ]; then
-        echo -e "                                                                                    "
-        echo -e " \e[31m Error! File ${FUEL_QA}/utils/jenkins/conv_snapshot_file.py not found! \e[0m "
-        echo -e "                                                                                    "
-        exit 1
+        if [ -t 1 ]; then
+          echo -e "                                                                                    "
+          echo -e " \e[31m Error! File ${FUEL_QA}/utils/jenkins/conv_snapshot_file.py not found! \e[0m "
+          echo -e "                                                                                    "
+          exit 1
+        else
+            echo "                                                                       "
+            echo " Error! File ${FUEL_QA}/utils/jenkins/conv_snapshot_file.py not found! "
+            echo "                                                                       "
+            exit 1
+        fi
       else
           python "${FUEL_QA}/utils/jenkins/conv_snapshot_file.py"
           if [ ! -f "${SNAPSHOT_OUTPUT_FILE}" ]; then
-            echo -e "                                                             "
-            echo -e " \e[31m Error! File ${SNAPSHOT_OUTPUT_FILE} not found! \e[0m "
-            echo -e "                                                             "
-            exit 1
+            if [ -t 1 ]; then
+              echo -e "                                                             "
+              echo -e " \e[31m Error! File ${SNAPSHOT_OUTPUT_FILE} not found! \e[0m "
+              echo -e "                                                             "
+              exit 1
+            else
+                echo "                                                "
+                echo " Error! File ${SNAPSHOT_OUTPUT_FILE} not found! "
+                echo "                                                "
+                exit 1
+            fi
           else
               source "${SNAPSHOT_OUTPUT_FILE}"
           fi
@@ -225,7 +246,7 @@ GetSnapshotParams() {
 }
 
 
-ApplyVariables() {
+apply_variables() {
   case ${1} in
     fuel-11)
          fuel_11_vars
@@ -241,7 +262,7 @@ ApplyVariables() {
          ;;
     fuel-9.2)
          fuel_9_2_vars
-         GetSnapshotParams
+         get_snapshot_params
          ;;
     fuel-ccp-k8s)
          fuel_ccp_k8s_vars
@@ -253,7 +274,7 @@ ApplyVariables() {
 ### MAIN ###
 
 # first we want to apply variables for all cases
-VariablesForAll
+variables_for_all
 
 # apply specific variables
-ApplyVariables "${WHAT_INSTALL}"
+apply_variables "${TO_INSTALL}"
