@@ -1,68 +1,259 @@
-# Network interface driver
-# May be one of virtio, e1000, pcnet, rtl8139
-export INTERFACE_MODEL='e1000'
+################################
+###    Variables for ALL     ###
+### Please edit this section ###
+################################
+VariablesForAll() {
+  ## LOGS DIR ##
+  export LOGS_DIR="${HOME}/systest-logs"
 
-# Create snapshot after successful test
-export MAKE_SNAPSHOT='true'
+  ## SSL CERTS DIR ##
+  export SSL_CERTS_DIR="${HOME}/systest-logs"
 
-# SSL DIR
-export SSL_CERTS_DIR=$HOME/systest-logs
+  ## RELEASE ##
+  export OPENSTACK_RELEASE="Ubuntu"
+  #export OPENSTACK_RELEASE="CentOS"
 
-# LOGS
-export LOGS_DIR=$HOME/systest-logs
+  ## HW ##
+  export NODES_COUNT=7
+  export ADMIN_NODE_MEMORY=4096
+  export ADMIN_NODE_CPU=2
+  export SLAVE_NODE_MEMORY=4096
+  export SLAVE_NODE_CPU=2
+  #export NODE_VOLUME_SIZE=50
+  #export ADMIN_NODE_VOLUME_SIZE=75
 
-# ISO
-export ISO_PATH=/opt/fuel-iso/fuel-8.0-465-2016-01-21_07-52-32.iso
+  ## NETWORK INTERFACE DRIVER ##
+  ## May be one of virtio, e1000, pcnet, rtl8139 ##
+  export INTERFACE_MODEL='e1000'
 
-# Manifests
-#export SYNC_DEPL_TASKS=true
-#export UPLOAD_MANIFESTS=true
-#export UPLOAD_MANIFESTS_PATH=/home/$(whoami)/fuel-library/deployment/puppet/
+  ## MANIFESTS ##
+  #export UPLOAD_MANIFESTS=true
+  #export SYNC_DEPL_TASKS=true
+  #export UPLOAD_MANIFESTS_PATH="/home/$(whoami)/fuel-library/deployment/puppet/"
 
-# Release
-export OPENSTACK_RELEASE="Ubuntu"
-#export OPENSTACK_RELEASE="CentOS"
+  ## KVM ##
+  #export KVM_USE=true
 
-# Devops template
-#export DEVOPS_SETTINGS_TEMPLATE=/home/$(whoami)/devops/multirack.yaml
+  ## Create snapshots as last step in test-case ##
+  export MAKE_SNAPSHOT=true
 
-# HW
-export NODES_COUNT=7
-export ADMIN_NODE_MEMORY=4096
-export SLAVE_NODE_MEMORY=4096
-export SLAVE_NODE_CPU=2
+  ## Diagnostic snapshot ##
+  #export ALWAYS_CREATE_DIAGNOSTIC_SNAPSHOT=true
 
-# MULTI-RACK
-#export MULTIPLE_NETWORKS='true'
+  ## Target dir ##
+  export TARGET_DIR="/opt"
 
-# DOCKER
-# export BUILD_IMAGES=true
+  ## ISO DIR PATH ##
+  export ISO_DIR="${TARGET_DIR}/fuel-iso"
 
-# TEST GROUP
-export MY_GROUP="setup"
-#export MY_GROUP="deploy_simple_flat"
-#export MY_GROUP="deploy_ha_flat"
-#export MY_GROUP="deploy_ha"
-#export MY_GROUP="deploy_ha_vlan"
-#export MY_GROUP="deploy_neutron_vlan_ha"
-#export MY_GROUP="deploy_neutron_gre_ha"
-#export MY_GROUP="ha_delete_vips"
-#export MY_GROUP="ceph_ha"
-#export MY_GROUP="ceph_multinode_with_cinder"
-#export MY_GROUP="deploy_simple_cinder"
-#export MY_GROUP="ceph_rados_gw"
-#export MY_GROUP="deploy_pr_ha"
-#export MY_GROUP="test_pullrequest"
-#export MY_GROUP="deploy_ceilometer_simple_with_mongo"
-#export MY_GROUP="deploy_ceilometer_ha_with_mongo"
-#export MY_GROUP="deploy_neutron_vlan"
-#export MY_GROUP="deploy_simple_zabbix"
-#export MY_GROUP="bvt_1"
-#export MY_GROUP="bvt_2"
-#export MY_GROUP="deploy_bonding_ha_balance_slb"
-#export MY_GROUP="deploy_ha_neutron"
-#export MY_GROUP="ha_flat_scalability"
-#export MY_GROUP="deploy_ha_one_controller_flat"
-#export MY_GROUP="deploy_ceilometer_ha_one_controller_multirole"
-#export MY_GROUP="deploy_controllers_from_custom_nodegroup"
-#export MY_GROUP="multiple_cluster_networks" # aka tread_7, all tests related to multi racks
+  ## ISO's PATH ##
+  ISO_FUEL_11="${ISO_DIR}/fuel-11.0-253-2017-02-01_05-04-39.iso"
+  ISO_FUEL_10="${ISO_DIR}/fuel-10.0-1301-2017-01-31_23-00-00.iso"
+  ISO_FUEL_9_x="${ISO_DIR}/MirantisOpenStack-9.0.iso"
+  ISO_FUEL_CCP_K8S="${ISO_DIR}/ubuntu-1604-server.qcow2"
+
+  ## FUEL QA's PATH ##
+  FUEL_QA_MASTER="${TARGET_DIR}/fuel-qa-master"
+  FUEL_QA_NEWTON="${TARGET_DIR}/fuel-qa-newton"
+  FUEL_QA_MITAKA="${TARGET_DIR}/fuel-qa-mitaka"
+
+  ## VENV's PATH ##
+  VENV_PATH_MASTER="${TARGET_DIR}/fuel-devops-venv-master"
+  VENV_PATH_NEWTON="${TARGET_DIR}/fuel-devops-venv-newton"
+  VENV_PATH_MITAKA="${TARGET_DIR}/fuel-devops-venv-mitaka"
+
+  ## DOCKER ##
+  #export BUILD_IMAGES=true
+
+  ## Devops template ##
+  #export DEVOPS_SETTINGS_TEMPLATE=/home/$(whoami)/devops/multirack.yaml
+
+  ## MULTI-RACK ##
+  #export MULTIPLE_NETWORKS=true
+
+  ## TEST GROUP ##
+  export MY_GROUP="setup"
+  ############################################################################################
+  #export MY_GROUP="bvt_ubuntu_bootstrap"
+  #export MY_GROUP="bonding_ha_one_controller"
+  #export MY_GROUP="bonding_ha"
+  #export MY_GROUP="bvt_2"
+  #export MY_GROUP="ceph_ha"
+  #export MY_GROUP="ceph_ha_one_controller"
+  #export MY_GROUP="ceph_rados_gw"
+  #export MY_GROUP="custom_hostname"
+  #export MY_GROUP="cic_maintenance_mode"
+  #export MY_GROUP="controller_replacement"
+  #export MY_GROUP="cluster_actions_ha"
+  #export MY_GROUP="cluster_actions"
+  #export MY_GROUP="deploy_ha"
+  #export MY_GROUP="deploy_pr_ha"
+  #export MY_GROUP="deploy_neutron_vlan_ha"
+  #export MY_GROUP="deploy_neutron_vlan"
+  #export MY_GROUP="deploy_neutron_gre_ha"
+  #export MY_GROUP="deploy_ceilometer_ha_with_mongo"
+  #export MY_GROUP="deploy_ceilometer_ha_one_controller_multirole"
+  #export MY_GROUP="deploy_controllers_from_custom_nodegroup"
+  #export MY_GROUP="error_node_reinstallation"
+  #export MY_GROUP="full_cluster_reinstallation"
+  #export MY_GROUP="filling_root"
+  #export MY_GROUP="ha_delete_vips"
+  #export MY_GROUP="ha_neutron"
+  #export MY_GROUP="ha_neutron_public"
+  #export MY_GROUP="ha_neutron_tun"
+  #export MY_GROUP="ha_neutron_tun_scale"
+  #export MY_GROUP="ha_neutron_destructive"
+  #export MY_GROUP="jumbo_frames"
+  #export MY_GROUP="multiracks_2"
+  #export MY_GROUP="multiple_cluster_networks" # aka tread_7, all tests related to multi racks
+  #export MY_GROUP="multirole"
+  #export MY_GROUP="offloading"
+  #export MY_GROUP="one_controller_actions"
+  #export MY_GROUP="ready_node_reinstallation"
+  #export MY_GROUP="repetitive_restart"
+  #export MY_GROUP="smoke_neutron"
+  #export MY_GROUP="services_ha_one_controller"
+  #export MY_GROUP="services_ha.ceilometer"
+  #export MY_GROUP="services_ha"
+  #export MY_GROUP="test_pullrequest"
+  #export MY_GROUP="thread_1"
+  #export MY_GROUP="thread_3"
+  ############################################################################################
+}
+################################
+###    Variables for ALL     ###
+### Please edit this section ###
+################################
+
+
+fuel_11_vars() {
+  export ISO_PATH="${ISO_FUEL_11}"
+  export FUEL_QA="${FUEL_QA_MASTER}"
+  export VENV_PATH="${VENV_PATH_MASTER}"
+}
+
+
+fuel_10_vars() {
+  export ISO_PATH="${ISO_FUEL_10}"
+  export FUEL_QA="${FUEL_QA_NEWTON}"
+  export VENV_PATH="${VENV_PATH_NEWTON}"
+}
+
+
+fuel_9_0_vars() {
+  export UPDATE_MASTER=false
+  export FORCE_DISABLE_UPDATES=true
+  export FUEL_RELEASE_VERSION="9.0"
+  export ISO_PATH="${ISO_FUEL_9_x}"
+  export FUEL_QA="${FUEL_QA_MITAKA}"
+  export VENV_PATH="${VENV_PATH_MITAKA}"
+}
+
+
+fuel_9_1_vars() {
+  export UPDATE_MASTER=true
+  export FORCE_DISABLE_UPDATES=false
+  export FUEL_RELEASE_VERSION="9.0"
+  export UPDATE_MASTER_VIA_MOS_MU=false
+  export REBOOT_MASTER_AFTER_UPDATE=false
+  export ISO_PATH="${ISO_FUEL_9_x}"
+  export FUEL_QA="${FUEL_QA_MITAKA}"
+  export VENV_PATH="${VENV_PATH_MITAKA}"
+}
+
+
+fuel_9_2_vars() {
+  export UPDATE_MASTER=true
+  export FUEL_RELEASE_VERSION="9.2"
+  export ISO_PATH="${ISO_FUEL_9_x}"
+  export FUEL_QA="${FUEL_QA_MITAKA}"
+  export VENV_PATH="${VENV_PATH_MITAKA}"
+}
+
+
+fuel_ccp_k8s_vars() {
+  export VENV_PATH="${VENV_PATH_MASTER}"
+  export ENV_NAME="${USR}-venv-k8s"
+  export IMAGE_PATH="${ISO_FUEL_CCP_K8S}"
+  export DONT_DESTROY_ON_SUCCESS=1
+  export DEPLOY_METHOD="kargo"
+  export SLAVES_COUNT=3
+  #export DEPLOY_TIMEOUT=1200
+  export WORKSPACE="${HOME}/fuel-ccp-workspace"
+  export KARGO_REPO="https://github.com/kubernetes-incubator/kargo.git"
+  export KARGO_COMMIT="origin/master"
+  export CCP_INSTALLER_DIR="${HOME}/fuel-ccp-installer"
+  export CUSTOM_YAML='
+  hyperkube_image_repo: "quay.io/coreos/hyperkube"
+  hyperkube_image_tag: "v1.5.1_coreos.0"
+  upstream_dns_servers: [172.18.176.6,172.18.32.6]
+  nameservers: [172.18.176.6,172.18.32.6]
+  searchdomains: [mcp.mirantis.net, mirantis.net]
+  use_hyperkube_cni: true
+  docker_version: 1.12
+  resolvconf_mode: host_resolvconf'
+}
+
+
+GetSnapshotParams() {
+  export SNAPSHOT_ARTIFACTS_FILE="${SCRIPTPATH}/snapshots.params"
+  export SNAPSHOT_OUTPUT_FILE="${SCRIPTPATH}/9.x_vars.sh"
+  curl -v -S https://product-ci.infra.mirantis.net/job/9.x.snapshot/lastSuccessfulBuild/artifact/snapshots.params > "${SNAPSHOT_ARTIFACTS_FILE}"
+  if [ ! -f "${SNAPSHOT_ARTIFACTS_FILE}" ]; then
+    echo -e "                                                             "
+    echo -e " \e[31m Error! SNAPSHOT_ARTIFACTS_FILE not downloaded! \e[0m "
+    echo -e "                                                             "
+    exit 1
+  else
+      if [ ! -f "${FUEL_QA}/utils/jenkins/conv_snapshot_file.py" ]; then
+        echo -e "                                                                                    "
+        echo -e " \e[31m Error! File ${FUEL_QA}/utils/jenkins/conv_snapshot_file.py not found! \e[0m "
+        echo -e "                                                                                    "
+        exit 1
+      else
+          python "${FUEL_QA}/utils/jenkins/conv_snapshot_file.py"
+          if [ ! -f "${SNAPSHOT_OUTPUT_FILE}" ]; then
+            echo -e "                                                             "
+            echo -e " \e[31m Error! File ${SNAPSHOT_OUTPUT_FILE} not found! \e[0m "
+            echo -e "                                                             "
+            exit 1
+          else
+              source "${SNAPSHOT_OUTPUT_FILE}"
+          fi
+      fi
+  fi
+}
+
+
+ApplyVariables() {
+  case ${1} in
+    fuel-11)
+         fuel_11_vars
+         ;;
+    fuel-10)
+         fuel_10_vars
+         ;;
+    fuel-9.0)
+         fuel_9_0_vars
+         ;;
+    fuel-9.1)
+         fuel_9_1_vars
+         ;;
+    fuel-9.2)
+         fuel_9_2_vars
+         GetSnapshotParams
+         ;;
+    fuel-ccp-k8s)
+         fuel_ccp_k8s_vars
+         ;;
+  esac
+}
+
+
+### MAIN ###
+
+# first we want to apply variables for all cases
+VariablesForAll
+
+# apply specific variables
+ApplyVariables "${WHAT_INSTALL}"
