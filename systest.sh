@@ -36,7 +36,7 @@ getopts_variables() {
   while getopts ":i:h" opt; do
     case ${opt} in
       i)
-        TO_INSTALL="${OPTARG}" 
+        TO_INSTALL="${OPTARG}"
         ;;
       h)
         show_help
@@ -101,7 +101,7 @@ check_variables() {
         else
           echo "                                   "
           echo " You want to install ${TO_INSTALL} "
-          echo "                                   " 
+          echo "                                   "
         fi
       else
           if [ -t 1 ]; then
@@ -140,9 +140,58 @@ global_and_specific_variables() {
 }
 
 
+check_and_cd_fuel_ccp_installer() {
+  if [ ! -d "${HOME}/fuel-ccp-workspace" ]; then
+    if [ -t 1 ]; then
+      echo -e "                                                                         "
+      echo -e " \e[31m Error! Directory ${HOME}/fuel-ccp-workspace doesn't exist. \e[0m "
+      echo -e "                                                                         "
+      exit 1
+    else
+        echo "                                                            "
+        echo " Error! Directory ${HOME}/fuel-ccp-workspace doesn't exist. "
+        echo "                                                            "
+        exit 1
+    fi
+  fi
+
+  if [[ ! ${CCP_INSTALLER_DIR:-} ]]; then
+    if [ -t 1 ]; then
+      echo -e "                                                   "
+      echo -e " \e[31m Error! CCP_INSTALLER_DIR is not set! \e[0m "
+      echo -e "                                                   "
+      exit 1
+    else
+        echo "                                      "
+        echo " Error! CCP_INSTALLER_DIR is not set! "
+        echo "                                      "
+        exit 1
+    fi
+  else
+      cd "${CCP_INSTALLER_DIR}"
+      ec=$?
+
+      if [ "${ec}" -gt "0" ]; then
+        if [ -t 1 ]; then
+          echo -e "                                                       "
+          echo -e " \e[31m Error! Cannot cd to ${CCP_INSTALLER_DIR} \e[0m "
+          echo -e "                                                       "
+          exit 1
+        else
+            echo "                                          "
+            echo " Error! Cannot cd to ${CCP_INSTALLER_DIR} "
+            echo "                                          "
+            exit 1
+        fi
+      fi
+  fi
+}
+
+
 run_test() {
   case ${1} in
     fuel-ccp-k8s)
+      check_and_cd_fuel_ccp_installer
       bash -x "${CCP_INSTALLER_DIR}/utils/jenkins/run_k8s_deploy_test.sh"
       ;;
     *)
@@ -150,12 +199,12 @@ run_test() {
         echo -e "                                                           "
         echo -e " \e[33m ATTENTION! Logs will be saved in ${LOGS_DIR} \e[0m "
         echo -e "                                                           "
-        bash -x "${FUEL_QA}/utils/jenkins/system_tests.sh" -w "${FUEL_QA}" -j "${USR}-venv" -i "${ISO_PATH}" -V "${VENV_PATH}" -l "${LOGS_DIR}" -o --group="${MY_GROUP}"
+        sh -x "${FUEL_QA}/utils/jenkins/system_tests.sh" -w "${FUEL_QA}" -j "${USR}-venv" -i "${ISO_PATH}" -V "${VENV_PATH}" -l "${LOGS_DIR}" -o --group="${MY_GROUP}"
       else
           echo "                                              "
           echo " ATTENTION! Logs will be saved in ${LOGS_DIR} "
           echo "                                              "
-          bash -x "${FUEL_QA}/utils/jenkins/system_tests.sh" -w "${FUEL_QA}" -j "${USR}-venv" -i "${ISO_PATH}" -V "${VENV_PATH}" -l "${LOGS_DIR}" -o --group="${MY_GROUP}"
+          sh -x "${FUEL_QA}/utils/jenkins/system_tests.sh" -w "${FUEL_QA}" -j "${USR}-venv" -i "${ISO_PATH}" -V "${VENV_PATH}" -l "${LOGS_DIR}" -o --group="${MY_GROUP}"
       fi
       ;;
   esac
