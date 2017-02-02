@@ -3,6 +3,9 @@
 ### Please edit this section ###
 ################################
 variables_for_all() {
+  ## Keep test environment after tests are finished ##
+  export KEEP_AFTER="yes"
+
   ## LOGS DIR ##
   export LOGS_DIR="${HOME}/systest-logs"
 
